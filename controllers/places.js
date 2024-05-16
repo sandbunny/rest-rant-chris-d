@@ -7,14 +7,14 @@ router.get('/', (req, res) => {
         city: 'Seattle',
         state: 'WA',
         cuisines: 'Thai, Pan-Asian',
-        pic: 'https://placebear.com/250/250'
+        pic: '/images/restaurant.jpg'
       }, {
         id:2,
         name: 'Coding Cat Cafe',
         city: 'Phoenix',
         state: 'AZ',
         cuisines: 'Coffee, Bakery',
-        pic: 'https://placebear.com/250/250'
+        pic: '/images/restaurant1.jpg'
       }]      
     res.render('places/index', {places })
 })

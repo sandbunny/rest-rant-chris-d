@@ -8,6 +8,9 @@ function error404 () {
           <main>
               <h1>404: PAGE NOT FOUND</h1>
               <p>Oops, sorry, we can't find this page!</p>
+              <div>
+                <img src="https://placebear.com/500/500" alt="Bear" />
+              </div>
           </main>
       </Def>
     )
