@@ -2,6 +2,7 @@ const React = require('react');
 const Def = require('../default');
 
 function show(data) {
+    console.log("Show - data:", data); // Log the data object
     return (
         <Def>
             <main className="container mt-5">
@@ -18,13 +19,13 @@ function show(data) {
                     </div>
                 </div>
                 <a href={`/places/${data.id}/edit`} className='btn btn-warning'>
-                        Edit
-                    </a>
-                    <form method='POST' action={`/places/${data.id}?_method=DELETE`}>
-                        <button type='submit' className='btn btn-danger'>
-                            Delete
-                        </button>
-                    </form>
+                    Edit
+                </a>
+                <form method='POST' action={`/places/${data.id}?_method=DELETE`}>
+                    <button type='submit' className='btn btn-danger'>
+                        Delete
+                    </button>
+                </form>
                 <div className="row mt-4">
                     <div className="col-lg-12">
                         <h2>Comments</h2>
