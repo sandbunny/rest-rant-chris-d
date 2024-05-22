@@ -11,7 +11,8 @@ function show(data) {
                         <h2>Rating</h2>
                         <p>Currently Unrated</p>
                         <h2>Description</h2>
-                        <p>Located in {data.place.city}, {data.place.state} Serving {data.place.cuisines}</p>
+                        <h4>{data.place.showEstablished()}</h4>
+                        <h4>Located in {data.place.city}, {data.place.state} Serving {data.place.cuisines}</h4>
                     </div>
                     <div className="col-md-6">
                         <img src={data.place.pic} className="img-fluid" alt={data.place.name} />
