@@ -1,7 +1,38 @@
-const React = require('react');
+import React, { useState } from 'react';
 const Def = require('../default');
 
+
+
 function show(data) {
+    const [isRantChecked, setIsRantChecked] = useState(false); // State to manage the checked state of the rant checkbox
+
+    const handleRantChange = () => {
+        setIsRantChecked(!isRantChecked); // Toggle the state of the rant checkbox
+    };
+
+    let comments = (
+        <h3 className='inactive'>
+            No comments yet!
+        </h3>
+    );
+
+    if (data.place.comments.length) {
+        comments = data.place.comments.map((c, index) => {
+            return (
+                <div className="border p-3 mb-3" key={index}>
+                    <h2 className={ `${c.rant ? 'text-danger' : 'text-success'}`}>
+                        {c.rant ? 'Rant! 😡' : 'Rave! 😃'}
+                    </h2>
+                    <h4>{c.content}</h4>
+                    <h3>
+                        <strong>- {c.author}</strong>
+                    </h3>
+                    <h4>Rating: {c.stars}</h4>
+                </div>
+            );
+        });
+    }
+
     return (
         <Def>
             <main className="container mt-5">
@@ -15,21 +46,56 @@ function show(data) {
                         <h4>Located in {data.place.city}, {data.place.state} Serving {data.place.cuisines}</h4>
                     </div>
                     <div className="col-md-6">
-                        <img src={data.place.pic} className="img-fluid" alt={data.place.name} />
+                        <img src={data.place.pic} className="img-fluid rounded" alt={data.place.name} />
                     </div>
                 </div>
-                <a href={`/places/${data.place._id}/edit`} className='btn btn-warning'>
-                    Edit
-                </a>
-                <form method='POST' action={`/places/${data.place._id}?_method=DELETE`}>
-                    <button type='submit' className='btn btn-danger'>
-                        Delete
-                    </button>
-                </form>
+                <div className="mt-4">
+                    <a href={`/places/${data.place._id}/edit`} className='btn btn-warning mr-2'>
+                        Edit
+                    </a>
+                    <form method='POST' action={`/places/${data.place._id}?_method=DELETE`} className='d-inline'>
+                        <button type='submit' className='btn btn-danger'>
+                            Delete
+                        </button>
+                    </form>
+                </div>
                 <div className="row mt-4">
                     <div className="col-lg-12">
                         <h2>Comments</h2>
-                        <p>No Comments Yet!</p>
+                        {comments}
+                    </div>
+                </div>
+                <div className="row mt-4">
+                    <div className="col-lg-12">
+                        <h2>Add a Comment</h2>
+                        <form action={`/places/${data.place._id}/comment`} method="POST" className="mb-3">
+                            <div className="form-group">
+                                <label htmlFor="author">Author</label>
+                                <input type="text" className="form-control" id="author" name="author" required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="content">Content</label>
+                                <textarea className="form-control" id="content" name="content" rows="3" required></textarea>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="stars">Star Rating</label>
+                                <input type="number" className="form-control" id="stars" name="stars" step="0.5" min="0" max="5" required />
+                            </div>
+                           
+                            <div className="form-check">
+                                <input 
+                                    type="checkbox" 
+                                    className="form-check-input" 
+                                    id="rant" 
+                                    name="rant" 
+                                    value="true"
+                                    checked={isRantChecked} 
+                                    onChange={handleRantChange} 
+                                />
+                                <label className="form-check-label" htmlFor="rant">Rant</label>
+                            </div>
+                            <button type="submit" className="btn btn-primary mt-3">Submit</button>
+                        </form>
                     </div>
                 </div>
             </main>
