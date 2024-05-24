@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 const Def = require('../default');
 
-
-
 function show(data) {
     const [isRantChecked, setIsRantChecked] = useState(false); // State to manage the checked state of the rant checkbox
 
@@ -15,8 +13,26 @@ function show(data) {
             No comments yet!
         </h3>
     );
+    let rating = (
+        <h3 className='inactive'>
+            Not yet rated 
+        </h3>
+    )
 
     if (data.place.comments.length) {
+        let sumRatings = data.place.comments.reduce((tot, c) => {
+            return tot + c.stars
+          }, 0)
+          let averageRating = Math.round(sumRatings / data.place.comments.length)
+          let stars = ' '
+          for (let i = 0; i < averageRating; i++) {
+            stars += '⭐'
+          }
+          rating = (
+            <h3>
+              {stars} stars
+            </h3>
+          )
         comments = data.place.comments.map((c, index) => {
             return (
                 <div className="border p-3 mb-3" key={index}>
@@ -40,7 +56,7 @@ function show(data) {
                     <div className="col-md-6">
                         <h1>{data.place.name}</h1>
                         <h2>Rating</h2>
-                        <p>Currently Unrated</p>
+                        <h2>{rating}</h2>
                         <h2>Description</h2>
                         <h4>{data.place.showEstablished()}</h4>
                         <h4>Located in {data.place.city}, {data.place.state} Serving {data.place.cuisines}</h4>
